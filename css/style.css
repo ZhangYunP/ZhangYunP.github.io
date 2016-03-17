@@ -779,15 +779,18 @@ header nav ul li a:hover {
   min-height: 400px;
 }
 .post,
-.page {
+.page,
+.resume {
   background: #fafafa;
 }
 .post a,
-.page a {
+.page a,
+.resume a {
   color: #2ca6cb;
 }
 .post a:hover,
-.page a:hover {
+.page a:hover,
+.resume a:hover {
   color: #ea6753;
 }
 @media only screen and (min-width: 768px) {
@@ -1758,7 +1761,7 @@ footer {
   width: 6.875em;
   height: 6.875em;
   margin: 0 auto;
-  background: no-repeat url("img/author.jpg") left top;
+  background: no-repeat url("https://zhangyunp.github.io/img/author.jpg") left top;
   -webkit-background-size: 6.875em 6.875em;
   -moz-background-size: 6.875em 6.875em;
   background-size: 6.875em 6.875em;
