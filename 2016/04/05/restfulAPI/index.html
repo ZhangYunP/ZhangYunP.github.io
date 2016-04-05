@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>helloworld | 实验博客</title>
+    <title>restfulAPI | 实验博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Polo">
     
-    <meta name="description" content="大家好  初次使用Hexo+GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！可是，现在没什么想到什么，那就下次再记录。GitHub: 点我吧！
-拜拜！">
+    <meta name="description" content="RESTFUL api 初探restful api最近很流行，这段时间我也抽空了解了一下，下面我就近期学到的一些知识进行了一些总结。简单来说restfulapi 是一种无状态的传输接口的架构，它的核心是“资源”，充分利用了http协议的“动词”，get、post、put、delete分别用来获取，新">
     
     
     
@@ -74,23 +73,23 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/16/hello-world/" title="helloworld" itemprop="url">helloworld</a>
+      <a href="/2016/04/05/restfulAPI/" title="restfulAPI" itemprop="url">restfulAPI</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-03-16T10:26:35.746Z" itemprop="datePublished">2016年03月16日</time>
-    更新日期:<time datetime="2016-04-05T08:10:39.037Z" itemprop="dateModified">2016年04月05日</time>
+    <time datetime="2016-04-05T05:32:15.952Z" itemprop="datePublished">2016年04月05日</time>
+    更新日期:<time datetime="2016-04-05T08:16:38.885Z" itemprop="dateModified">2016年04月05日</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h2 id="大家好"><a href="#大家好" class="headerlink" title="大家好  "></a>大家好  <img src="http://zhangyunp.github.io/img/superman.png" alt="superMan"></h2><h4 id="初次使用Hexo-GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！"><a href="#初次使用Hexo-GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！" class="headerlink" title="初次使用Hexo+GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！"></a>初次使用Hexo+GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！</h4><h4 id="可是，现在没什么想到什么，那就下次再记录。"><a href="#可是，现在没什么想到什么，那就下次再记录。" class="headerlink" title="可是，现在没什么想到什么，那就下次再记录。"></a>可是，现在没什么想到什么，那就下次再记录。</h4><p><code>GitHub</code>: <a href="https://github.com/ZhangYunP" target="_blank" rel="external">点我吧！</a></p>
-<h2 id="拜拜！"><a href="#拜拜！" class="headerlink" title="拜拜！"></a>拜拜！</h2>  
+		<h5 id="RESTFUL-api-初探"><a href="#RESTFUL-api-初探" class="headerlink" title="RESTFUL api 初探"></a>RESTFUL api 初探</h5><p>restful api最近很流行，这段时间我也抽空了解了一下，下面我就近期学到的一些知识进行了一些总结。简单来说restfulapi 是一种无状态的传输接口的架构，它的核心是“资源”，充分利用了http协议的“动词”，get、post、put、delete分别用来获取，新建，更新，删除资源。<br><br>restfulapi使用uri作为资源标识，如果设计合理可以让用户一目了然，下面就来结合实例具体谈谈该如何设计rest风格的api。<br><br>首先，让我们来看看著名的github的api设计。当我们访问<a href="https://api.github.com" target="_blank" rel="external">https://api.github.com</a> 这个api入口（Root Endpoint）时，可以看到github返回的对象，返回结果如下：<img src="http://zhangyunp.github.io/img/githubapi.png" alt="githubapi"><br><br>返回的数据是json格式的，符合“All data is sent and received as JSON”这条原则，而且仔细观察你会发现，在这个json里面的包含了一系列具体分类的api，相当于一个指导原则，告诉使用者下一步可以怎么做。其实这是一个HATEOAS（Hypermedia as the Engine of A pplication State），它规定超文本链接应该被用于在API中创建更好的资源导航。<br><br>继续观察这些api，发现github用单复数(名词)来区分是集合（Summary Representations）还是一个个体（Detailed Representations）。其中有些api包含有参数，如：”<a href="https://api.github.com/search/code?q={query}{&amp;page,per_page,sort,order}" target="_blank" rel="external">https://api.github.com/search/code?q={query}{&amp;page,per_page,sort,order}</a>“ ,当请求为get时,这些参数可以提交给后台服务器(owner,repo). 接下来，我们随便进入一个以上提供的api，如：“<a href="https://api.github.com/events”" target="_blank" rel="external">https://api.github.com/events”</a> 这个url是一个event_url,当访问成功,将返回一个包含json对象的数组，其内容如下：<img src="http://zhangyunp.github.io/img/eventurl.png" alt="event_url">.当访问失败时返回包含失败信息的json字符串,如{<br>  “message”: “Validation Failed”,<br>  “errors”: [<br>    {<br>      “resource”: “Issue”,<br>      “field”: “title”,<br>      “code”: “missing_field”<br>    }<br>  ]<br>}<br>可能的错误码如下图<img src="http://zhangyunp.github.io/img/error.png" alt="errorcode">.<br>另外，github对API 安全非常重视，所有请求都是使用https协议，每一次请求必须带上身份验证（实现方式很多），使用的是安全性很高的Oauth2。总的来说github的api设计是十分经典的，有很高的学习意义。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -109,7 +108,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://zhangyunp.github.io/2016/03/16/hello-world/" data-title="helloworld | 实验博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://zhangyunp.github.io/2016/04/05/restfulAPI/" data-title="restfulAPI | 实验博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -118,14 +117,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/19/study-daily/" title="前端小知识">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  前端小知识</span>
+
+<div class="next">
+<a href="/2016/03/31/study-daily-3/"  title="c#和c">
+ <strong>NEXT:</strong><br/> 
+ <span>c#和c
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -139,7 +138,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大家好"><span class="toc-number">1.</span> <span class="toc-text">大家好  </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初次使用Hexo-GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！"><span class="toc-number">1.0.1.</span> <span class="toc-text">初次使用Hexo+GitHub急速构建一个个人Blog，感觉很新奇、很炫，暂时在这里记录一些技术方面的心得，希望用的顺手！</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可是，现在没什么想到什么，那就下次再记录。"><span class="toc-number">1.0.2.</span> <span class="toc-text">可是，现在没什么想到什么，那就下次再记录。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拜拜！"><span class="toc-number">2.</span> <span class="toc-text">拜拜！</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#RESTFUL-api-初探"><span class="toc-number">1.</span> <span class="toc-text">RESTFUL api 初探</span></a></li></ol>
   </div>
 
 <div id="asidepart">
