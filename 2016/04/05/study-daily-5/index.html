@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>restfulAPI | 实验博客</title>
+    <title>study-daily-5 | 实验博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Polo">
     
-    <meta name="description" content="RESTFUL api 初探restful api最近很流行，这段时间我也抽空了解了一下，下面我就近期学到的一些知识进行了一些总结。简单来说restfulapi 是一种无状态的传输接口的架构，它的核心是“资源”，充分利用了http协议的“动词”，get、post、put、delete分别用来获取，新">
+    <meta name="description" content="前端知识(3)301 302 区别 这个问题有关于seo（搜索引擎优化），也是一个面试经常被问到的问题。301即永久重定向，302即临时重定向。当一个网站设置301永久的转向另一个网址时，搜索引擎的蜘蛛会爬取新的网址的内容，并且给新网址添加索引，以后访问旧网站时会自动转向重定向网址，这多搜索引擎比较">
     
     
     
@@ -73,30 +73,29 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/05/restfulAPI/" title="restfulAPI" itemprop="url">restfulAPI</a>
+      <a href="/2016/04/05/study-daily-5/" title="study-daily-5" itemprop="url">study-daily-5</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-05T05:32:15.952Z" itemprop="datePublished">2016年04月05日</time>
-    更新日期:<time datetime="2016-04-05T11:17:00.317Z" itemprop="dateModified">2016年04月05日</time>
+    <time datetime="2016-04-05T12:00:28.000Z" itemprop="datePublished">2016年04月05日</time>
+    更新日期:<time datetime="2016-04-05T13:52:35.521Z" itemprop="dateModified">2016年04月05日</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h5 id="RESTFUL-api-初探"><a href="#RESTFUL-api-初探" class="headerlink" title="RESTFUL api 初探"></a>RESTFUL api 初探</h5><p>restful api最近很流行，这段时间我也抽空了解了一下，下面我就近期学到的一些知识进行了一些总结。简单来说restfulapi 是一种无状态的传输接口的架构，它的核心是“资源”，充分利用了http协议的“动词”，get、post、put、delete分别用来获取，新建，更新，删除资源。<br><br>restfulapi使用uri作为资源标识，如果设计合理可以让用户一目了然，下面就来结合实例具体谈谈该如何设计rest风格的api。<br><br>首先，让我们来看看著名的github的api设计。当我们访问<a href="https://api.github.com" target="_blank" rel="external">https://api.github.com</a> 这个api入口（Root Endpoint）时，可以看到github返回的对象，返回结果如下：<img src="http://zhangyunp.github.io/img/githubapi.png" alt="githubapi"> <br><br>返回的数据是json格式的，符合“All data is sent and received as JSON”这条原则，而且仔细观察你会发现，在这个json里面的包含了一系列具体分类的api，相当于一个指导原则，告诉使用者下一步可以怎么做。其实这是一个HATEOAS（Hypermedia as the Engine of A pplication State），它规定超文本链接应该被用于在API中创建更好的资源导航。<br><br>继续观察这些api，发现了一些规律。</p>
-<ul>
-<li>1.github用单复数(名词)来区分是集合（Summary Representations）还是一个个体（Detailed Representations）</li>
-<li>2.除了search（搜索）其他的资源描述都用的是名词。</li>
-<li>3.有些api包含有参数，如：”<a href="https://api.github.com/search/code?q={query}{&amp;page,per_page,sort,order}" target="_blank" rel="external">https://api.github.com/search/code?q={query}{&amp;page,per_page,sort,order}</a>“ ,当请求为get时,这些参数可以提交给后台服务器(owner,repo)。<br><br>接下来，我们进入一个以上提供的具体分类的api(有些需要身份验证进不去)，如：“<a href="https://api.github.com/events”" target="_blank" rel="external">https://api.github.com/events”</a> 。由url可知返回的内容是一个事件的列表，当访问成功的时候，其内容如下：<img src="http://zhangyunp.github.io/img/eventurl.png" alt="event_url"> <br><br>现在我简单的分析一下返回内容。id是这条信息的主键（唯一）、type指事件类型（有pull拉和push上传两种）、actor包含一些作者信息、repo指仓库信息、payload顾名思义有效载重，即主要信息、commits指版本信息，publish指是否开源、created_at指创建时间。当访问失败时返回包含失败信息的json字符串,如{<br>“message”: “Validation Failed”,<br>“errors”: [<br>  {<pre><code>&quot;resource&quot;: &quot;Issue&quot;,
-&quot;field&quot;: &quot;title&quot;,
-&quot;code&quot;: &quot;missing_field&quot;
-</code></pre>  }<br>]<br>}<br>可能的错误码如下图<img src="http://zhangyunp.github.io/img/error.png" alt="errorcode">.<br>另外，github对API 安全非常重视，所有请求都是使用https协议，每一次请求必须带上身份验证（实现方式很多），使用的是安全性很高的Oauth2。总的来说github的api设计是十分经典的，有很高的学习意义。</li>
+		<h3 id="前端知识-3"><a href="#前端知识-3" class="headerlink" title="前端知识(3)"></a>前端知识(3)</h3><h5 id="301-302-区别"><a href="#301-302-区别" class="headerlink" title="301 302 区别"></a>301 302 区别</h5><p> 这个问题有关于seo（搜索引擎优化），也是一个面试经常被问到的问题。301即永久重定向，302即临时重定向。当一个网站设置301永久的转向另一个网址时，搜索引擎的蜘蛛会爬取新的网址的内容，并且给新网址添加索引，以后访问旧网站时会自动转向重定向网址，这多搜索引擎比较友好。当使用302时，搜索引擎可能会把源网站的内容保留并且记录他认为比较合适的域名（可能是老的，也可能是新的），而这样做对搜索引擎是十分不利的，例如谷歌可能会因为这种情况（同样内容的页面采用了不同的域名）认为你作弊，导致减少你页面的权重，让你的搜索结果靠后。并且302可能是网址劫持的结果，你辛辛苦苦写得页面被别人通过302盗链过去，索引综合考虑尽可能避免302跳转。<br><br><br> 其他2xx代表服务器端成功接收请求，客服端成功发送请求<br><br> 4xx代表请求端错误<br><br> 5xx代表服务器端错误<br></p>
+<h5 id="js中运算符优先级"><a href="#js中运算符优先级" class="headerlink" title="js中运算符优先级"></a>js中运算符优先级</h5><p>优先级相同时，从左往右顺序执行，具体如下<img src="http://zhangyunp.github.io/img/firstclass.png" alt="firstclass"></p>
+<h5 id="两种-HTTP-请求方法：GET-和-POST"><a href="#两种-HTTP-请求方法：GET-和-POST" class="headerlink" title="两种 HTTP 请求方法：GET 和 POST"></a>两种 HTTP 请求方法：GET 和 POST</h5><ul>
+<li>GET - 从指定的资源请求数据。</li>
+<li>POST - 向指定的资源提交要被处理的数据<br>区别<br>get<br>GET 请求可被缓存<br>GET 请求保留在浏览器历史记录中<br>GET 请求可被收藏为书签<br>GET 请求不应在处理敏感数据时使用<br>GET 请求有长度限制<br>GET 请求只应当用于取回数据<br>post<br>POST 请求不会被缓存<br>POST 请求不会保留在浏览器历史记录中<br>POST 不能被收藏为书签<br>POST 请求对数据长度没有要求</li>
 </ul>
+<h5 id="js正则"><a href="#js正则" class="headerlink" title="js正则"></a>js正则</h5><p>stringObject.match(regexp),当regexp使用了g时返回存放匹配结果的数组，而且有g全局 ，match() 即不提供与子表达式匹配的文本的信息。<br>而没有g, 所有与子表达式匹配的信息也输出。<br>零宽断言：指定一个位置，这个位置应该满足一定的条件<br><br>I’m singing while you’re dancing \b\w+(?=ing\b) 匹配sing和danc<br><br>reading a book (?&lt;=\bre)\w+\b ading<br><br>?: 是 不想被捕获的时候使用 可以提高程序执行速度<br></p>
+<h5 id="字符相关"><a href="#字符相关" class="headerlink" title="字符相关"></a>字符相关</h5><p>UTF-8 编码 Unicode 字符集中的英文字符只需要 1 个字节，而对于中文则需要 3 个字节；而 GBK 编码任何字符都需要 2 个字节</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,7 +115,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://zhangyunp.github.io/2016/04/05/restfulAPI/" data-title="restfulAPI | 实验博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://zhangyunp.github.io/2016/04/05/study-daily-5/" data-title="study-daily-5 | 实验博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -125,19 +124,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/04/05/study-daily-5/" title="study-daily-5">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  study-daily-5</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/31/study-daily-3/"  title="c#和c">
+<a href="/2016/04/05/restfulAPI/"  title="restfulAPI">
  <strong>NEXT:</strong><br/> 
- <span>c#和c
+ <span>restfulAPI
 </span>
 </a>
 </div>
@@ -154,7 +145,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#RESTFUL-api-初探"><span class="toc-number">1.</span> <span class="toc-text">RESTFUL api 初探</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前端知识-3"><span class="toc-number">1.</span> <span class="toc-text">前端知识(3)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#301-302-区别"><span class="toc-number">1.0.1.</span> <span class="toc-text">301 302 区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js中运算符优先级"><span class="toc-number">1.0.2.</span> <span class="toc-text">js中运算符优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#两种-HTTP-请求方法：GET-和-POST"><span class="toc-number">1.0.3.</span> <span class="toc-text">两种 HTTP 请求方法：GET 和 POST</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js正则"><span class="toc-number">1.0.4.</span> <span class="toc-text">js正则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符相关"><span class="toc-number">1.0.5.</span> <span class="toc-text">字符相关</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
