@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>study-daily-5 | 实验博客</title>
+    <title>前端知识（3） | 实验博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Polo">
@@ -73,7 +73,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/05/study-daily-5/" title="study-daily-5" itemprop="url">study-daily-5</a>
+      <a href="/2016/04/05/study-daily-5/" title="前端知识（3）" itemprop="url">前端知识（3）</a>
   </h1>
   <p class="article-author">By
     
@@ -81,7 +81,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-04-05T12:00:28.000Z" itemprop="datePublished">2016年04月05日</time>
-    更新日期:<time datetime="2016-04-05T13:52:35.521Z" itemprop="dateModified">2016年04月05日</time>
+    更新日期:<time datetime="2016-04-05T15:19:28.895Z" itemprop="dateModified">2016年04月05日</time>
     
   </p>
 </header>
@@ -96,6 +96,8 @@
 </ul>
 <h5 id="js正则"><a href="#js正则" class="headerlink" title="js正则"></a>js正则</h5><p>stringObject.match(regexp),当regexp使用了g时返回存放匹配结果的数组，而且有g全局 ，match() 即不提供与子表达式匹配的文本的信息。<br>而没有g, 所有与子表达式匹配的信息也输出。<br>零宽断言：指定一个位置，这个位置应该满足一定的条件<br><br>I’m singing while you’re dancing \b\w+(?=ing\b) 匹配sing和danc<br><br>reading a book (?&lt;=\bre)\w+\b ading<br><br>?: 是 不想被捕获的时候使用 可以提高程序执行速度<br></p>
 <h5 id="字符相关"><a href="#字符相关" class="headerlink" title="字符相关"></a>字符相关</h5><p>UTF-8 编码 Unicode 字符集中的英文字符只需要 1 个字节，而对于中文则需要 3 个字节；而 GBK 编码任何字符都需要 2 个字节</p>
+<h5 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> indexOf = [].indexOf ?</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">arr, item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> arr.indexOf(item)</span><br><span class="line">    &#125; :</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">indexOf</span>(<span class="params">arr, item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] === item) &#123;</span><br><span class="line">          <span class="keyword">return</span> i</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ret = []</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = arr[i]</span><br><span class="line">    <span class="keyword">if</span> (indexOf(ret, item) === <span class="number">-1</span>) &#123;</span><br><span class="line">      ret.push(item)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或利用哈希表<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = [], hash = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, elem; (elem = arr[i]) != <span class="literal">null</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!hash[elem]) &#123;</span><br><span class="line">            result.push(elem);</span><br><span class="line">            hash[elem] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line"><span class="comment">//http://www.cnblogs.com/sosoft/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -115,7 +117,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://zhangyunp.github.io/2016/04/05/study-daily-5/" data-title="study-daily-5 | 实验博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://zhangyunp.github.io/2016/04/05/study-daily-5/" data-title="前端知识（3） | 实验博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -125,10 +127,10 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/04/05/study-daily-6/" title="study-daily-6">
+ <a href="/2016/04/05/study-daily-6/" title="requirejs 初探">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  study-daily-6</span>
+  requirejs 初探</span>
 </a>
 </div>
 
@@ -153,7 +155,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前端知识-3"><span class="toc-number">1.</span> <span class="toc-text">前端知识(3)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#301-302-区别"><span class="toc-number">1.0.1.</span> <span class="toc-text">301 302 区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js中运算符优先级"><span class="toc-number">1.0.2.</span> <span class="toc-text">js中运算符优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#两种-HTTP-请求方法：GET-和-POST"><span class="toc-number">1.0.3.</span> <span class="toc-text">两种 HTTP 请求方法：GET 和 POST</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js正则"><span class="toc-number">1.0.4.</span> <span class="toc-text">js正则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符相关"><span class="toc-number">1.0.5.</span> <span class="toc-text">字符相关</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前端知识-3"><span class="toc-number">1.</span> <span class="toc-text">前端知识(3)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#301-302-区别"><span class="toc-number">1.0.1.</span> <span class="toc-text">301 302 区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js中运算符优先级"><span class="toc-number">1.0.2.</span> <span class="toc-text">js中运算符优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#两种-HTTP-请求方法：GET-和-POST"><span class="toc-number">1.0.3.</span> <span class="toc-text">两种 HTTP 请求方法：GET 和 POST</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js正则"><span class="toc-number">1.0.4.</span> <span class="toc-text">js正则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符相关"><span class="toc-number">1.0.5.</span> <span class="toc-text">字符相关</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组去重"><span class="toc-number">1.0.6.</span> <span class="toc-text">数组去重</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
