@@ -1,0 +1,347 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端小知识 | 实验博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Polo">
+    
+    <meta name="description" content="typeof 和 instanceoftypeof是一元运算符，后面接一个运算数，可以用来判断一个变量的类型，可能的结果有：number，boolean，object，function，string，undefined。也可以用它来判断一个变量是否存在，如if(typeof a != ‘undefi">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/greenman.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/greenman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/greenman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="实验博客" title="实验博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="实验博客">实验博客</a></h1>
+				<h2 class="blog-motto">把每一天看成生命的最后一天</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+							
+								<li><a href="/">主页</a></li>
+							
+					
+							
+								<li><a href="/archives">列表</a></li>
+							
+					
+							
+								<li><a href="https://zhangyunp.github.io/resume/resume.html">简历</a></li>
+							
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:zhangyunp.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/11/study-daily-8/" title="前端小知识" itemprop="url">前端小知识</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-04-11T00:58:49.000Z" itemprop="datePublished">2016年04月11日</time>
+    更新日期:<time datetime="2016-04-14T08:20:21.348Z" itemprop="dateModified">2016年04月14日</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h5 id="typeof-和-instanceof"><a href="#typeof-和-instanceof" class="headerlink" title="typeof 和 instanceof"></a>typeof 和 instanceof</h5><p>typeof是一元运算符，后面接一个运算数，可以用来判断一个变量的类型，可能的结果有：number，boolean，object，function，string，undefined。也可以用它来判断一个变量是否存在，如if(typeof a != ‘undefined’){dosomething}，不要使用if(a){dosomething},这样如果a不存在就会报错。对于arrary，null它一律返回object，这也是他的局限性。<br>instanceof ：实例,例子<br>instanceof 用于判断一个变量是否某个对象的实例。如 var a=new Array();alert(a instanceof Array); 会返回 true，同时 alert(a instanceof Object) 也会返回 true;这是因为 Array 是 object 的子类。另外插一句，arguments不是arrary的实例。</p>
+<h5 id="defineProperty"><a href="#defineProperty" class="headerlink" title="defineProperty"></a>defineProperty</h5><p>Object.defineProperty(obj, prop, descriptor)方法接收三个参数：需要添加或修改属性的对象，属性名称，属性描述options<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">'name'</span>, &#123;</span><br><span class="line">    value: <span class="string">'erik'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">'name'</span>)); <span class="comment">// Object &#123;value: "erik", writable: false, enumerable: false, configurable: false&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">'age'</span>, &#123;</span><br><span class="line">    value: <span class="number">26</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    writable: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o.age); <span class="comment">// 26</span></span><br><span class="line"></span><br><span class="line">o.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(o.age); <span class="comment">// 18. 因为age属性是可重写的</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(o)); <span class="comment">// []. name和age属性都不是可枚举的</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">'sex'</span>, &#123;</span><br><span class="line">    value: <span class="string">'male'</span>,</span><br><span class="line">    writable: <span class="literal">false</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">o.sex = <span class="string">'female'</span>; <span class="comment">// 这里的赋值其实是不起作用的</span></span><br><span class="line"><span class="built_in">console</span>.log(o.sex); <span class="comment">// 'male';</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> o.sex; <span class="comment">// false, 属性删除的动作也是无效的</span></span><br></pre></td></tr></table></figure></p>
+<p> Object.defineProperty() 方法设置属性时，属性不能同时声明访问器属性（ set 和 get ）和 writable 或者 value 属性。 意思就是，某个属性设置了 writable 或者 value 属性，那么这个属性就不能声明 get 和 set 了，反之亦然。</p>
+<h5 id="JS的作用域"><a href="#JS的作用域" class="headerlink" title="JS的作用域"></a>JS的作用域</h5><p> 作用域分为全局和局部作用域，在es6之前，js没有块级作用域，但他有一个函数级作用域，在函数级作用域内部声明的变量可以看成局部变量，这些局部变量不能在外部被访问（除闭包外）。<br> 函数级作用域<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="string">"Jack"</span>; <span class="comment">// local variable; only accessible in this showName function</span></span><br><span class="line">    <span class="built_in">console</span>.log (name); <span class="comment">// Jack</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log (name); <span class="comment">// Richard: the global variable</span></span><br></pre></td></tr></table></figure></p>
+<p>没有块级作用域<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">"Richard"</span>;</span><br><span class="line"><span class="comment">// the blocks in this if statement do not create a local context for the name variable</span></span><br><span class="line"><span class="keyword">if</span> (name) &#123;</span><br><span class="line">    name = <span class="string">"Jack"</span>; <span class="comment">// this name is the global name variable and it is being changed to "Jack" here</span></span><br><span class="line">    <span class="built_in">console</span>.log (name); <span class="comment">// Jack: still the global variable</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Here, the name variable is the same global name variable, but it was changed in the if statement</span></span><br><span class="line"><span class="built_in">console</span>.log (name); <span class="comment">// Jack</span></span><br></pre></td></tr></table></figure></p>
+<p>在函数内部没用关键词var声明的变量属于全局变量，全局变量优先级小于局部变量，当访问函数内的 foo 变量时，JavaScript 会按照下面顺序查找：</p>
+<p>1.当前作用域内是否有 var foo 的定义。<br>2.函数形式参数是否有使用 foo 名称的。<br>3.函数自身是否叫做 foo。<br>4.回溯到上一级作用域，然后从 #1 重新开始。<br>全局变量属于window对象，可以表示为window.obj或’obj’ in window。另外，为了避免对全局作用域的污染，所以一般情况下我们尽可能少的声明全局变量。利用立即执行函数（匿名包装器）创建一个命名空间</p>
+<h5 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h5><p>从代码顺序上看，js中我们可以先使用变量在声明，在执行顺序上看，在代码运行前，var 表达式和 function 声明都将会被提升到当前作用域的顶部。。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showName</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log (<span class="string">"First Name: "</span> + name);</span><br><span class="line"><span class="keyword">var</span> name = <span class="string">"Ford"</span>;</span><br><span class="line"><span class="built_in">console</span>.log (<span class="string">"Last Name: "</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">showName (); </span><br><span class="line"><span class="comment">// First Name: undefined</span></span><br><span class="line"><span class="comment">// Last Name: Ford</span></span><br></pre></td></tr></table></figure></p>
+<p>函数表达式也存在变量提升（当作一个特殊变量），函数声明会覆盖变量声明</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/博客/">博客</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/blog/">blog</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://zhangyunp.github.io/2016/04/11/study-daily-8/" data-title="前端小知识 | 实验博客" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/04/14/study-daily-9/" title="前端小知识">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  前端小知识</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/04/08/study-daily-7/"  title="web app 的布局的小探究">
+ <strong>NEXT:</strong><br/> 
+ <span>web app 的布局的小探究
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#typeof-和-instanceof"><span class="toc-number">1.</span> <span class="toc-text">typeof 和 instanceof</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#defineProperty"><span class="toc-number">2.</span> <span class="toc-text">defineProperty</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JS的作用域"><span class="toc-number">3.</span> <span class="toc-text">JS的作用域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变量提升"><span class="toc-number">4.</span> <span class="toc-text">变量提升</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="https://github.com" target="_blank" title="GitHub">GitHub</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1764554935" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ZhangYunP" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright"> <a href="https://github.com/ZhangYunP" target="_blank" title="polo">Polo</a> © 2016 
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,347 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>web app 的布局的小探究 | 实验博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Polo">
+    
+    <meta name="description" content="1.rem布局（比较通用）按照分辨率来设置转根元素的font-size的百分比值css代码如下（经过前人总结得来）12345678910111213141516171819html &amp;#123;    font-size: 62.5%; /* 10÷16=62.5% */&amp;#125;@media o">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/greenman.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/greenman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/greenman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="实验博客" title="实验博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="实验博客">实验博客</a></h1>
+				<h2 class="blog-motto">把每一天看成生命的最后一天</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+							
+								<li><a href="/">主页</a></li>
+							
+					
+							
+								<li><a href="/archives">列表</a></li>
+							
+					
+							
+								<li><a href="https://zhangyunp.github.io/resume/resume.html">简历</a></li>
+							
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:zhangyunp.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/08/study-daily-7/" title="web app 的布局的小探究" itemprop="url">web app 的布局的小探究</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-04-08T06:01:36.000Z" itemprop="datePublished">2016年04月08日</time>
+    更新日期:<time datetime="2016-04-08T07:03:31.306Z" itemprop="dateModified">2016年04月08日</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h4 id="1-rem布局（比较通用）"><a href="#1-rem布局（比较通用）" class="headerlink" title="1.rem布局（比较通用）"></a>1.rem布局（比较通用）</h4><h5 id="按照分辨率来设置转根元素的font-size的百分比值"><a href="#按照分辨率来设置转根元素的font-size的百分比值" class="headerlink" title="按照分辨率来设置转根元素的font-size的百分比值"></a>按照分辨率来设置转根元素的font-size的百分比值</h5><p>css代码如下（经过前人总结得来）<br><br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">62.5%</span>; <span class="comment">/* 10÷16=62.5% */</span></span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> only screen and (min-width: <span class="number">481px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">html</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">94%</span><span class="meta">!important</span>; <span class="comment">/* 15.04÷16=94% */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> only screen and (min-width: <span class="number">561px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">html</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">109%</span><span class="meta">!important</span>; <span class="comment">/* 17.44÷16=109% */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> only screen and (min-width: <span class="number">641px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">html</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">125%</span><span class="meta">!important</span>; <span class="comment">/* 20÷16=125% */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>稍微解释一下上边的代码，一般现代浏览器的默认字体大小为16px，如果html的font-size设为62.5%，相当于html的font-size为10px（10/16=62.5%）,用rem单位布局的话，1rem相当于10px，以此类推。其他分辨率类似，只不过根元素不是10px</p>
+<h5 id="假设有一张641px的设计图，如何计算其padding，margin"><a href="#假设有一张641px的设计图，如何计算其padding，margin" class="headerlink" title="假设有一张641px的设计图，如何计算其padding，margin"></a>假设有一张641px的设计图，如何计算其padding，margin</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">margin-top</span><span class="selector-pseudo">:.5rem</span>; <span class="comment">/*10 ÷ 20 = 0.5*/</span></span><br><span class="line"><span class="selector-tag">padding-top</span><span class="selector-pseudo">:1rem</span> <span class="comment">/* 20 ÷ 20 =1 */</span></span><br></pre></td></tr></table></figure>
+<p>margin在设计图上为10px，转化成rem即0.5rem。padding为20px，转化成1rem。</p>
+<h5 id="设置width、height"><a href="#设置width、height" class="headerlink" title="设置width、height"></a>设置width、height</h5><p>大块的div布局里面用百分比，元素的设置一般都用rem来<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">height</span><span class="selector-pseudo">:100px</span>; <span class="comment">/* 100 ÷ 20 = 5rem;*/</span></span><br><span class="line"><span class="selector-tag">width</span><span class="selector-pseudo">:50px</span>; <span class="comment">/* 50 ÷ 20 = 2.5rem;*/</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="border的设置"><a href="#border的设置" class="headerlink" title="border的设置"></a>border的设置</h5><p>一般小屏里体现不出border<br>border:.2rem solid #cccccc;<br>总结：<br><br>优点：缩放时页面所有元素都是等比缩放，保持设计稿的原来布局<br>缺点:高度方向可能会留出空白</p>
+<h4 id="2-响应式布局（流式布局-媒体查询）"><a href="#2-响应式布局（流式布局-媒体查询）" class="headerlink" title="2.响应式布局（流式布局+媒体查询）"></a>2.响应式布局（流式布局+媒体查询）</h4><p>缺点：工作大，维护性难<br>优点：只要耐心，布局可以做到完美（如：导航条在大屏下是横排，在小屏下是竖排，在超小屏下隐藏）</p>
+<h4 id="3-流式布局"><a href="#3-流式布局" class="headerlink" title="3.流式布局"></a>3.流式布局</h4><p>通过百分比来定义宽度，但是高度大都是用px来固定住，所以在大屏幕的手机下显示效果会变成有些页面元素宽度被拉的很长，但是高度还是和原来一样，实际显示非常的不协调。<br>总结<br><br>优点；比较简单<br>缺点：不灵活，效果可能不好</p>
+<h4 id="4-固定宽度布局"><a href="#4-固定宽度布局" class="headerlink" title="4.固定宽度布局"></a>4.固定宽度布局</h4><p>把页面设置成320的宽度，超出部分留白，两边出现白条感觉怪怪的。<br>总结<br><br>优点；操作简单<br>缺点：大屏下界面不协调</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/博客/">博客</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/blog/">blog</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://zhangyunp.github.io/2016/04/08/study-daily-7/" data-title="web app 的布局的小探究 | 实验博客" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/04/11/study-daily-8/" title="前端小知识">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  前端小知识</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/04/05/study-daily-6/"  title="requirejs 初探">
+ <strong>NEXT:</strong><br/> 
+ <span>requirejs 初探
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-rem布局（比较通用）"><span class="toc-number">1.</span> <span class="toc-text">1.rem布局（比较通用）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#按照分辨率来设置转根元素的font-size的百分比值"><span class="toc-number">1.1.</span> <span class="toc-text">按照分辨率来设置转根元素的font-size的百分比值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#假设有一张641px的设计图，如何计算其padding，margin"><span class="toc-number">1.2.</span> <span class="toc-text">假设有一张641px的设计图，如何计算其padding，margin</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#设置width、height"><span class="toc-number">1.3.</span> <span class="toc-text">设置width、height</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#border的设置"><span class="toc-number">1.4.</span> <span class="toc-text">border的设置</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-响应式布局（流式布局-媒体查询）"><span class="toc-number">2.</span> <span class="toc-text">2.响应式布局（流式布局+媒体查询）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-流式布局"><span class="toc-number">3.</span> <span class="toc-text">3.流式布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-固定宽度布局"><span class="toc-number">4.</span> <span class="toc-text">4.固定宽度布局</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="https://github.com" target="_blank" title="GitHub">GitHub</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1764554935" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ZhangYunP" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright"> <a href="https://github.com/ZhangYunP" target="_blank" title="polo">Polo</a> © 2016 
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,358 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端小知识 | 实验博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Polo">
+    
+    <meta name="description" content="js的闭包闭包：内部作用域（相当于子）可以访问外部作用域（相当于父）的变量（以引用的方式调用，不会引起gc），而函数是js中唯一拥有自己作用域的结构，所以闭包依赖函数。利用闭包我们可以在函数外部访问到函数内部的变量（模拟私有方法）。12345678910111213141516function Co">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/greenman.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/greenman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/greenman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="实验博客" title="实验博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="实验博客">实验博客</a></h1>
+				<h2 class="blog-motto">把每一天看成生命的最后一天</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+							
+								<li><a href="/">主页</a></li>
+							
+					
+							
+								<li><a href="/archives">列表</a></li>
+							
+					
+							
+								<li><a href="https://zhangyunp.github.io/resume/resume.html">简历</a></li>
+							
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:zhangyunp.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/14/study-daily-9/" title="前端小知识" itemprop="url">前端小知识</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-04-14T07:25:44.000Z" itemprop="datePublished">2016年04月14日</time>
+    更新日期:<time datetime="2016-07-12T09:23:36.935Z" itemprop="dateModified">2016年07月12日</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h4 id="js的闭包"><a href="#js的闭包" class="headerlink" title="js的闭包"></a>js的闭包</h4><p>闭包：内部作用域（相当于子）可以访问外部作用域（相当于父）的变量（以引用的方式调用，不会引起gc），而函数是js中唯一拥有自己作用域的结构，所以闭包依赖函数。利用闭包我们可以在函数外部访问到函数内部的变量（模拟私有方法）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">start</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = start;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        increment: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = Counter(<span class="number">4</span>);</span><br><span class="line">foo.increment();</span><br><span class="line">foo.get(); <span class="comment">// 5</span></span><br></pre></td></tr></table></figure></p>
+<p>循环中的闭包<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i++;i&lt;<span class="number">10</span>)</span><br><span class="line">&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在闭包中，对外部的变量i进行了引用，结果为10个9（共享一块内存）,如果想出现0-9，需要利用匿名包装器对变量i进行拷贝。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>;i++;i&lt;<span class="number">10</span>)</span><br><span class="line">&#123;</span><br><span class="line">setTimeout((<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;)(i),<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="iframe父子页面通讯"><a href="#iframe父子页面通讯" class="headerlink" title="iframe父子页面通讯"></a>iframe父子页面通讯</h5><p>父页面访问iframe，通过iframe.contentWindow去获得iframe这个页面的window对象，在通过这个对象正常访问。如：<br>访问iframe中的.itarget元素，通过$(‘iframe’)[0].contentWindow.$(‘.itarget’)<br>子页面iframe访问父页面，<br>在iframe页面中通过parent就可以访问父页面le，如：<br>parent.$(‘li’)[0],就可以访问到父页面的li元素</p>
+<h5 id="js的异步编程"><a href="#js的异步编程" class="headerlink" title="js的异步编程"></a>js的异步编程</h5><p>异步是指执行顺序上不是一个一个任务来的（异步时不必要等待上一个任务完全执行），即函数并不立即返回结果，函数会把控制权交给回调，回调会在一段时间片内被调度，减少用户等待时间，提高用户体验。下面介绍js中几种异步编程方式：<br>1.利用回调（注意回调并不一定是异步的）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="comment">//js中setTimeout通过回调实现异步调用</span></span><br><span class="line">　　　　　　<span class="comment">// f1的任务代码</span></span><br><span class="line">　　　　　　callback</span><br><span class="line">　　　　&#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line">f1(f2);</span><br></pre></td></tr></table></figure></p>
+<p>缺点：高耦合，难维护<br>优点:易于理解<br>2.事件监听<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.on（event，f2）</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    dosomething;（f1代码）</span><br><span class="line">    obj.trigger(event)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>缺点：代码全变成事件驱动，使得流程不清晰<br>优点：易于模块化，低耦合<br>3.发布/订阅（观察者模式）<br>publish-subscribe,多种实现，利用信号量<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jQuery.subscribe(<span class="string">"done"</span>, f2);</span><br><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">　　　　setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　　　<span class="comment">// f1的任务代码</span></span><br><span class="line">　　　　　　jQuery.publish(<span class="string">"done"</span>);</span><br><span class="line">　　　　&#125;, <span class="number">1000</span>);</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4.promise<br>CommonJS中的一种规范，简单说，它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。比如，f1的回调函数f2,可以写成：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f1().then(f2);<span class="comment">//还可以链式回调f1().then(f2).then(f3)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> dfd = $.Deferred();<span class="comment">//创建一个deferred对象</span></span><br><span class="line">　　　　setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　　　<span class="comment">// f1的任务代码</span></span><br><span class="line">　　　　　　dfd.resolve();</span><br><span class="line">　　　　&#125;, <span class="number">500</span>);</span><br><span class="line">　　　　<span class="keyword">return</span> dfd.promise;<span class="comment">//jquert中，promise对象是dfd对象的阉割，只保留done（）和fail（）方法</span></span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<p>deferred对象是jquery回调的一种解决方案，dfd有resolve(),reject()方法，可以改变dfd对象的执行状态，从而触发不同的回调（done、fail），<br>$.when(dfd1,dfd2)//$.when()可以监听多个dfd对象，指定一个回调<br>.done(f1)<br>.fail(f2)<br>Promise提供更便捷的流程控制，Promise.all()可以解决需要并发的执行若干个异步操作</p>
+<h5 id="Javascript线程模型和事件驱动"><a href="#Javascript线程模型和事件驱动" class="headerlink" title="Javascript线程模型和事件驱动"></a>Javascript线程模型和事件驱动</h5><p>Javascript在浏览器中的事件驱动（event driven）机制。事件驱动一般通过事件循环（event loop）和事件队列（event queue）来实现的。假定浏览器中有一个专门用于事件调度的实例（该实例可以是一个线程，我们可以称之为事件分发线程event dispatch thread），该实例的工作就是一个不结束的循环，从事件队列中取出事件，处理所有很事件关联的回调函数（event handler）。注意回调函数是在Javascript的主线程中运行的，而非事件分发线程中，以保证事件处理不会发生阻塞。<br>while(true) {<br> var event = eventQueue.pop();<br> if(event &amp;&amp; event.handler) {<br>     event.handler.execute(); // execute the callback in Javascript thread<br> } else {<br>     sleep(); //sleep some time to release the CPU do other stuff<br> }<br>}<br>通过事件驱动机制，我们可以想象Javascript的编程模型就是响应一系列的事件，执行对应的回调函数。</p>
+<h5 id="js异步编程"><a href="#js异步编程" class="headerlink" title="js异步编程"></a>js异步编程</h5><p>异步编程一般应用于io（读写资源，牵涉到大量字节的处理，需要长时间等待）的操作，而所谓异步编程就是把一个任务分成两阶段，第一阶段发出一个请求，第二阶段等待响应（回调函数，promise的then()，jquery的on事件处理。。。都属于这个阶段的实现,不接收响应不会执行，自然不会阻塞之后的操作）。这两部分不是连续执行的，当第一部分执行完成后，函数（第一个任务）会交出执行权，这个时候之后的函数（第二个任务）获得执行权，开始执行，等第一个任务的第二阶段得到响应时，第二个任务暂停执行，又把执行权交还给第一个任务的第二阶段，此时，第二阶段在这段时间片内执行，从代码顺序上来看，异步执行是不连续的(a（1）-&gt;b()-&gt;a(2))，而同步则是严格的按照代码顺序执行（a(1,2)-&gt;b()），但是会阻塞。</p>
+<h5 id="js图片的预加载"><a href="#js图片的预加载" class="headerlink" title="js图片的预加载"></a>js图片的预加载</h5><p>预加载，先显示一张小图，然后把真正的图片（一般比较大）缓存到本地（var img = new image（），img.src= url,这样图片会被浏览器下载），在通过异步的方法（img.onload）把图片插入到dom中，这样，在前台就可以一次性看到完整的大图</p>
+<h5 id="callee与caller的区别简单介绍"><a href="#callee与caller的区别简单介绍" class="headerlink" title="callee与caller的区别简单介绍"></a>callee与caller的区别简单介绍</h5><p>1.callee属性<br>此属性属于arguments对象,返回正在执行的函数，通过arguments.callee实现了递归效果，如<br>function func(num){<br>  if (num&lt;=1) {<br>    return 1;<br>  }<br>  else{<br>    return num*arguments.callee(num-1);<br>  };<br>};<br>console.log(func(5));<br>2.caller属性<br>此属性属于一个函数对象，它指向当前函数所属于的直接父函数，也可以说调用当前函数的函数。如<br>function CallLevel(){<br>   if (CallLevel.caller == null)<br>      return(“CallLevel was called from the top level.”);<br>   else<br>      return(“CallLevel was called by another function.”);<br>}</p>
+<p>document.write(CallLevel());</p>
+<p>// Output: CallLevel was called from the top level.</p>
+<h5 id="proto-and-prototype"><a href="#proto-and-prototype" class="headerlink" title="proto and prototype"></a><strong>proto</strong> and prototype</h5><p><strong>proto</strong>是对象上的一个内置属性，他指向构造器的原型对象，prototype是构造器的原型对象（本质是一个指针），原型对象上的属性和方法可以被该原型的所有实例所共享。简而言之，obj.<strong>proto</strong> == objConstructor.prototype<br>构造器有5种，object，function，string，date，arrary<br>object上的静态方法：object.create(protoobj)可以传入一个原型对象，创造一个原型链干净的对象<br>object.defineProperty(o,prop,descriptor)直接定义对象上的属性，descriptor包含value，writable：是否可写，configurable：是否可删，enumerable：是否可以被枚举（for in ，object.keys()），set(属性访问器，set:function(val){prop= val},可带一个参数)，get（属性访问器，get:function(){dosomething();return prop},回调不带参数）<br>object.getOwnPropertyDescriptor(obj,prop)返回属性描述符desctriptor<br>object.keys(o),返回数组，对象的属性</p>
+<h5 id="虚拟dom"><a href="#虚拟dom" class="headerlink" title="虚拟dom"></a>虚拟dom</h5><p>虚拟dom很火，众所周知，操作dom是很慢的，究其原因是dom结构复杂，如生成一个元素节点div，document.createElement(‘div’)这个操作会遍历6层原型链，去继承其上的属性和方法（object,eventtarget,node,element,htmlelement,htmldivelement）</p>
+<h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><p>递归顾名思义就是先递后归，函数先一层一层地向下执行，直到遇到递归基（递归终止条件），开始从最后结果一层一层地回归到顶层。递归的时候每次调用会新开辟一片栈区，函数内部的局部变量会重新初始化，先要在递归中保持变量（引用），可以使用静态变量。在一个函数内部声明一个局部变量就相当于，把这个局部变量从栈区拉到全局区，调用时是对这个变量直接引用，而不是再重新开辟栈区，调用完后再销毁。</p>
+<h5 id="逻辑短路"><a href="#逻辑短路" class="headerlink" title="逻辑短路"></a>逻辑短路</h5><p>|| &amp;&amp;省略if结构<br>逻辑运算的结果是布尔值，即0、1<br>运算符的优先级（=优先级很低）<br>defined(“pi”) || define(“pi”, 3.14)</p>
+<h5 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h5><p>24小时提供某种服务<br>apache提供网页服务</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/博客/">博客</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/blog/">blog</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://zhangyunp.github.io/2016/04/14/study-daily-9/" data-title="前端小知识 | 实验博客" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/04/15/nodejs/" title="nodejs">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  nodejs</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/04/11/study-daily-8/"  title="前端小知识">
+ <strong>NEXT:</strong><br/> 
+ <span>前端小知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#js的闭包"><span class="toc-number">1.</span> <span class="toc-text">js的闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#iframe父子页面通讯"><span class="toc-number">1.1.</span> <span class="toc-text">iframe父子页面通讯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js的异步编程"><span class="toc-number">1.2.</span> <span class="toc-text">js的异步编程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Javascript线程模型和事件驱动"><span class="toc-number">1.3.</span> <span class="toc-text">Javascript线程模型和事件驱动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js异步编程"><span class="toc-number">1.4.</span> <span class="toc-text">js异步编程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#js图片的预加载"><span class="toc-number">1.5.</span> <span class="toc-text">js图片的预加载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#callee与caller的区别简单介绍"><span class="toc-number">1.6.</span> <span class="toc-text">callee与caller的区别简单介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#proto-and-prototype"><span class="toc-number">1.7.</span> <span class="toc-text">proto and prototype</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#虚拟dom"><span class="toc-number">1.8.</span> <span class="toc-text">虚拟dom</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#递归"><span class="toc-number">1.9.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#逻辑短路"><span class="toc-number">1.10.</span> <span class="toc-text">逻辑短路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器"><span class="toc-number">1.11.</span> <span class="toc-text">服务器</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/博客/" title="博客">博客<sup>11</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="https://github.com" target="_blank" title="GitHub">GitHub</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1764554935" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/ZhangYunP" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright"> <a href="https://github.com/ZhangYunP" target="_blank" title="polo">Polo</a> © 2016 
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
