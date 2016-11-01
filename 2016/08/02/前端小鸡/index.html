@@ -4,12 +4,16 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>nodejs | 实验博客</title>
+    <title>前端小鸡 | 实验博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Polo">
     
-    <meta name="description" content="nodejs中的restfulapi var express = require(‘express’); var app = express(); var bodyParser = require(‘body-parser’); var path = require(‘path’); //datab">
+    <meta name="description" content="一、简单的介绍下JSON全局对象下的两个api###1.JSON.stringify(arg1,arg2)
+arg1：object，array
+#####eg1：当arg1为object时
+  var obj = new Object()
+ obj.name = &amp;quot;zhangsan&amp;quo">
     
     
     
@@ -73,28 +77,104 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/15/nodejs/" title="nodejs" itemprop="url">nodejs</a>
+      <a href="/2016/08/02/前端小鸡/" title="前端小鸡" itemprop="url">前端小鸡</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-15T07:27:15.000Z" itemprop="datePublished">2016年04月15日</time>
-    更新日期:<time datetime="2016-04-15T07:40:29.788Z" itemprop="dateModified">2016年04月15日</time>
+    <time datetime="2016-08-02T02:11:11.106Z" itemprop="datePublished">2016年08月02日</time>
+    更新日期:<time datetime="2016-11-01T13:40:50.336Z" itemprop="dateModified">2016年11月01日</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h4 id="nodejs中的restfulapi"><a href="#nodejs中的restfulapi" class="headerlink" title="nodejs中的restfulapi"></a>nodejs中的restfulapi</h4><p> var express = require(‘express’);<br> var app = express();<br> var bodyParser = require(‘body-parser’);<br> var path = require(‘path’);<br> //database<br> var mongo = require(‘mongodb’);<br> var monk = require(‘monk’);<br> var db = monk(‘localhost:27017/restdata’);</p>
-<p> //app.use()里面没有函数<br> app.use(bodyParser.urlencoded({ extended : true}));<br> app.use(bodyParser.json());</p>
-<p> app.use(express.static(__dirname+’/public’));</p>
-<p> var collectorder = db.get(‘orderlist’);<br> var collectuser = db.get(‘userlist’);</p>
-<p> app.get(‘/orders’,function(req,res){<br>   collectorder.find({},{limit:20},function(err,orders){<br>     res.json(orders);<br>   });<br> });<br> app.get(‘/users’,function(req,res){<br>   collectuser.find({},{},function(err,users){<br>     res.json(users);<br>   });<br> });</p>
-<p> app.get(‘/users/:name’,function(req,res){</p>
-<p>   collectuser.find({name:req.params.name},{},function(err,docs){<br>     res.json(docs);<br>   });<br> });<br> app.listen(3000);<br> monk用法<br> 读取数据：<br>var monk = require(‘monk’)<br>var db = monk(‘localhost:27017/monk-demo’)<br>var products = db.get(‘products’)<br>products.find({}, function(err, docs) {<br>console.log(docs)<br>})<br>插入数据：<br>products.insert({“name”:”orange juice”,”description”:”just so so”})<br>查找数据：<br>products.find({“name”:”apple juice”}, function(err, docs) {<br>console.log(docs)<br>})</p>
+		<h3 id="一、简单的介绍下JSON全局对象下的两个api"><a href="#一、简单的介绍下JSON全局对象下的两个api" class="headerlink" title="一、简单的介绍下JSON全局对象下的两个api"></a>一、简单的介绍下JSON全局对象下的两个api</h3><p>###1.JSON.stringify(arg1,arg2)</p>
+<p>arg1：object，array</p>
+<p>#####eg1：当arg1为object时</p>
+<pre><code>  var obj = new Object()
+ obj.name = &quot;zhangsan&quot;
+  obj.age = 18
+ var jsonStr = JSON.stringify(obj)
+console.log(jsonStr)
+console.log(typeof jsonStr)
+</code></pre><p>#####result:</p>
+<pre><code>{&quot;name&quot;:&quot;zhangsan&quot;,&quot;age&quot;:18} //这是一个json字符串
+string //类型为string
+</code></pre><p>#####eg2：当arg1为array时</p>
+<pre><code>  var arr = new Array()
+ arr[0] = &quot;zhangsan&quot;
+  arr[1] = 18
+ var jsonStr = JSON.stringify(arr)
+console.log(jsonStr)
+console.log(typeof jsonStr)
+</code></pre><p>result:</p>
+<pre><code>[&quot;zhangsan&quot;,18]
+string
+</code></pre><p>#####eg3：当arg2为array时<br>        var obj = {“name” : “zhangsan” , “age” : 18 , “sex” : 18}//json格式对象字面量<br>          var arr = []<br>         arr[0] = “name”<br>          arr[1] = “age”<br>         var jsonStr = JSON.stringify(obj , arr)<br>        console.log(jsonStr)<br>        console.log(typeof jsonStr)<br>result:</p>
+<pre><code>{&quot;name&quot;:&quot;zhangsan&quot;,&quot;age&quot;:18} //数组中没用值为sex的值
+string
+</code></pre><p>总结：把对象/数组转化成为json字符串，方便传输和拼接</p>
+<p>###2.JSON.parse(arg)</p>
+<p>arg：string</p>
+<p>#####eg：</p>
+<pre><code>  var obj = new Object()
+ obj.name = &quot;zhangsan&quot;
+  obj.age = 18
+ var jsonStr = JSON.stringify(obj)
+var jsonObj = JSON.parse(jsonStr)
+console.log(jsonObj)
+console.log(typeof jsonObj)
+console.log(jsonObj.name)
+</code></pre><p>#####result:</p>
+<pre><code>Object {name: &quot;zhangsan&quot;, age: 18}
+object
+zhangsan
+</code></pre><p>总结：把json字符串转化成为对象，方便调用（object.XXX）</p>
+<h3 id="二、简单的介绍下全局对象Object的静态方法create（）"><a href="#二、简单的介绍下全局对象Object的静态方法create（）" class="headerlink" title="二、简单的介绍下全局对象Object的静态方法create（）"></a>二、简单的介绍下全局对象Object的静态方法create（）</h3><p>object Objecet.create(proto,[descriptor])</p>
+<p>此方法创建一个对象并指定它的原型（内部实现还是通过new来的，如一些浏览器不支持es5，可以通过以下代码来支持这个api）</p>
+<pre><code>if(!Object.create){
+Object.create = function(p){
+    function F() {}
+    F.prototype = p
+    return new F()
+}
+}
+</code></pre><p>#####eg1:无第二个参数</p>
+<pre><code>var a = {&quot;name&quot;:&quot;li&quot;}
+var b =  Object.create(a)
+console.log(b)
+console.log(b.name)
+console.log(b.__proto__)
+</code></pre><p>#####result:<br>        {} //b是一个空对象<br>        li //b.<strong>prto</strong> == a,b通过原型链找到a，所以b.name == a.name<br>        Object {name: “li”} //即为a</p>
+<p>#####eg2:有第二个参数</p>
+<pre><code>var a = {}
+var desc = {
+name : {
+  value : &quot;zhangsan&quot;,
+  writable : true
+},
+age : {
+  configurable : true,
+  set : function(val){
+    age = val
+  },
+  get : function(){
+    return this.name + &quot; is &quot; + age
+  }
+}
+}
+var b =  Object.create(a , desc)
+console.log(b)
+console.log(b.name)
+b.name= &quot;lisi&quot;
+console.log(b.name)
+b.age = 19
+console.log(b.age)
+</code></pre><p>#####result:<br>    Object {name: “zhangsan”}<br>    zhangsan<br>    lisi<br>    lisi is 19</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -114,7 +194,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://zhangyunp.github.io/2016/04/15/nodejs/" data-title="nodejs | 实验博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://zhangyunp.github.io/2016/08/02/前端小鸡/" data-title="前端小鸡 | 实验博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -124,18 +204,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/08/02/前端小鸡/" title="前端小鸡">
+ <a href="/2016/08/02/gulp小鸡/" title="gulp小鸡">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  前端小鸡</span>
+  gulp小鸡</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/04/14/study-daily-9/"  title="前端小知识">
+<a href="/2016/04/15/nodejs/"  title="nodejs">
  <strong>NEXT:</strong><br/> 
- <span>前端小知识
+ <span>nodejs
 </span>
 </a>
 </div>
@@ -152,7 +232,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#nodejs中的restfulapi"><span class="toc-number">1.</span> <span class="toc-text">nodejs中的restfulapi</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、简单的介绍下JSON全局对象下的两个api"><span class="toc-number">1.</span> <span class="toc-text">一、简单的介绍下JSON全局对象下的两个api</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、简单的介绍下全局对象Object的静态方法create（）"><span class="toc-number">2.</span> <span class="toc-text">二、简单的介绍下全局对象Object的静态方法create（）</span></a></li></ol>
   </div>
 
 <div id="asidepart">

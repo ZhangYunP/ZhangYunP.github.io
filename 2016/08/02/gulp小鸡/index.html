@@ -4,12 +4,17 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>nodejs | 实验博客</title>
+    <title>gulp小鸡 | 实验博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Polo">
     
-    <meta name="description" content="nodejs中的restfulapi var express = require(‘express’); var app = express(); var bodyParser = require(‘body-parser’); var path = require(‘path’); //datab">
+    <meta name="description" content="&amp;apos;use strict&amp;apos;;
+
+var gulp = require(&amp;apos;gulp&amp;apos;),
+browserify = require(&amp;apos;browserify&amp;apos;),
+gutil = require(&amp;apos;gulp-util&amp;apos;),
+s">
     
     
     
@@ -73,29 +78,218 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/15/nodejs/" title="nodejs" itemprop="url">nodejs</a>
+      <a href="/2016/08/02/gulp小鸡/" title="gulp小鸡" itemprop="url">gulp小鸡</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://zhangyunp.github.io" title="Polo">Polo</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-15T07:27:15.000Z" itemprop="datePublished">2016年04月15日</time>
-    更新日期:<time datetime="2016-04-15T07:40:29.788Z" itemprop="dateModified">2016年04月15日</time>
+    <time datetime="2016-08-02T10:06:45.000Z" itemprop="datePublished">2016年08月02日</time>
+    更新日期:<time datetime="2016-11-01T13:39:59.760Z" itemprop="dateModified">2016年11月01日</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h4 id="nodejs中的restfulapi"><a href="#nodejs中的restfulapi" class="headerlink" title="nodejs中的restfulapi"></a>nodejs中的restfulapi</h4><p> var express = require(‘express’);<br> var app = express();<br> var bodyParser = require(‘body-parser’);<br> var path = require(‘path’);<br> //database<br> var mongo = require(‘mongodb’);<br> var monk = require(‘monk’);<br> var db = monk(‘localhost:27017/restdata’);</p>
-<p> //app.use()里面没有函数<br> app.use(bodyParser.urlencoded({ extended : true}));<br> app.use(bodyParser.json());</p>
-<p> app.use(express.static(__dirname+’/public’));</p>
-<p> var collectorder = db.get(‘orderlist’);<br> var collectuser = db.get(‘userlist’);</p>
-<p> app.get(‘/orders’,function(req,res){<br>   collectorder.find({},{limit:20},function(err,orders){<br>     res.json(orders);<br>   });<br> });<br> app.get(‘/users’,function(req,res){<br>   collectuser.find({},{},function(err,users){<br>     res.json(users);<br>   });<br> });</p>
-<p> app.get(‘/users/:name’,function(req,res){</p>
-<p>   collectuser.find({name:req.params.name},{},function(err,docs){<br>     res.json(docs);<br>   });<br> });<br> app.listen(3000);<br> monk用法<br> 读取数据：<br>var monk = require(‘monk’)<br>var db = monk(‘localhost:27017/monk-demo’)<br>var products = db.get(‘products’)<br>products.find({}, function(err, docs) {<br>console.log(docs)<br>})<br>插入数据：<br>products.insert({“name”:”orange juice”,”description”:”just so so”})<br>查找数据：<br>products.find({“name”:”apple juice”}, function(err, docs) {<br>console.log(docs)<br>})</p>
-  
+		<pre><code>&apos;use strict&apos;;
+
+var gulp = require(&apos;gulp&apos;),
+browserify = require(&apos;browserify&apos;),
+gutil = require(&apos;gulp-util&apos;),
+sourcemaps = require(&apos;gulp-sourcemaps&apos;),
+through = require(&apos;through2&apos;),
+uglify = require(&apos;gulp-uglify&apos;),
+glob = require(&apos;glob&apos;),
+source = require(&apos;vinyl-source-stream&apos;),
+buffer = require(&apos;vinyl-buffer&apos;),
+sass = require(&apos;gulp-ruby-sass&apos;),
+nodemon = require(&apos;gulp-nodemon&apos;),
+browserSync = require(&apos;browser-sync&apos;).create(),
+rename = require(&apos;gulp-rename&apos;),
+imagemin = require(&apos;gulp-imagemin&apos;),
+clean = require(&apos;gulp-clean&apos;),
+jade = require(&apos;gulp-jade&apos;),
+minifycss = require(&apos;gulp-minify-css&apos;),
+autoprefixer = require(&apos;gulp-autoprefixer&apos;),
+rev = require(&apos;gulp-rev-append&apos;),
+es2015 = require(&apos;babel-preset-es2015&apos;),
+filter = require(&apos;gulp-filter&apos;),
+babelify = require(&quot;babelify&quot;);
+
+
+var reload = browserSync.reload; 
+
+
+//transfer任务
+gulp.task(&apos;transfer&apos;,function(){
+  var transSrc = &apos;dev/fonts/**&apos;,
+      transDst = &apos;dist/fonts/&apos;;
+  return gulp.src(transSrc)
+           .pipe(gulp.dest(transDst));
+});
+
+
+//清空图片、样式、js
+gulp.task(&apos;clean&apos;, function() {
+  return  gulp.src([&apos;dist/css/*.css&apos;, &apos;dist/js/*.js&apos;, &apos;./dist/img/*.*&apos;], {read: false})
+            .pipe(clean());
+});
+
+
+// sass样式处理
+gulp.task(&apos;sass&apos;, function(){
+  var sasSrc = &apos;./dev/sass/*.scss&apos;,
+      sassDst = &apos;./dist/css/&apos;;
+   return sass(sasSrc, { style: &apos;expanded&apos; })
+          .pipe(autoprefixer({
+                     browsers: [&apos;last 2 versions&apos;, &apos;Android &gt;= 4.0&apos;],
+                     remove:true //是否去掉不必要的前缀 默认：true 
+                 }))
+          .pipe(gulp.dest(sassDst))
+          .pipe(rename({ suffix: &apos;.min&apos; }))
+          .pipe(minifycss())
+          .pipe(gulp.dest(sassDst))
+          .pipe(reload({stream: true}));
+});
+
+
+// css （拷贝 *.min.css，常规 CSS 则输出压缩与未压缩两个版本）
+gulp.task(&apos;css&apos;, function() {
+  var cssSrc = &apos;./dev/css/*.css&apos;,
+      cssDst = &apos;./dist/css/&apos;;
+  return gulp.src(cssSrc) 
+    .pipe(autoprefixer({
+               browsers: [&apos;last 2 versions&apos;, &apos;Android &gt;= 4.0&apos;],
+               remove:true //是否去掉不必要的前缀 默认：true 
+           }))
+    .pipe(gulp.dest(cssDst))
+    .pipe(filter([&apos;*&apos;, &apos;!dist/css/*.min.css&apos;]))
+    .pipe(rename({ suffix: &apos;.min&apos; }))
+    .pipe(minifycss())
+    .pipe(gulp.dest(cssDst))
+    //.pipe(reload({stream: true}));
+});
+
+
+// 图片处理
+gulp.task(&apos;images&apos;, function(){
+    var imgSrc = &apos;./dev/img/**&apos;,
+        imgDst = &apos;./dist/img/&apos;;
+    return gulp.src(imgSrc)
+            .pipe(imagemin())
+            .pipe(gulp.dest(imgDst))
+            .pipe(reload({stream: true}));
+})
+
+
+//让浏览器端使用commonjs规范的模块，并简单处理js
+gulp.task(&apos;browserify&apos;, function(){
+  var bundledStream = through(),//创建一个标准流（可以承接browserify打包后生成的流）
+      jsSrc = &apos;./dev/js/*.js&apos;,
+      jsDsr = &apos;./dist/js/&apos;;
+  bundledStream
+    .pipe(source(&apos;bundled.js&apos;))//browserify 不是一个专门为 gulp 写的包，所有它输出的数据流并不能直接 pipe 给 gulp 使用
+                               //像gulp.src()获得的就是一个gulp插件需要的vinyl虚拟文件流（buffer类型）
+    .pipe(buffer())//指定vinyl文件流内部是buffer格式的
+    .pipe(sourcemaps.init({loadMaps : true})) //在文件压缩前，初始化文件地图
+    .pipe(uglify())
+    .on(&apos;error&apos;,gutil.log)//如果出现错误就输出到gulp-util的log中
+    .pipe(sourcemaps.write(&apos;./&apos;))//指定文件地图生成的位置
+    .pipe(gulp.dest(jsDsr))
+    .pipe(reload({stream: true}));
+  glob(jsSrc ,{} ,function(err , entries){ //glob是一种文件匹配规则，类似于正则
+    if(err){
+      bundledStream.emit(&apos;error&apos;,err)
+    }
+    var b = browserify({
+      debug: true
+    });
+    entries.forEach(function(entry){
+      b.add(entry);
+    });
+      b
+      .transform(babelify, {&quot;presets&quot;: [&quot;es2015&quot;]})
+      .bundle()
+      .pipe(bundledStream);  
+  });
+  return bundledStream;
+});
+
+
+//特殊js文件处理
+gulp.task(&apos;js&apos;, function(){
+  var jsshimSrc = &apos;./dev/js-shim/*.js&apos;,
+      jsshimDst = &apos;./dist/js/&apos;;
+ return gulp.src(jsshimSrc)
+        .pipe(gulp.dest(jsshimDst));
+})
+
+
+//解析jade模版
+gulp.task(&apos;jade&apos; , function () {
+  var tplDst = &apos;./tpl/&apos;;
+  return gulp.src([&quot;app/views/pages/*.jade&quot;, &apos;!app/views/layout.jade&apos;, &apos;!app/views/includes/*.jade&apos;])
+    .pipe(jade({pretty: true}))
+    .pipe(gulp.dest(tplDst))
+    .pipe(reload({stream: true}));
+});
+
+
+//给html中引用添加版本号
+gulp.task(&apos;html&apos;, function () {
+  var htmlDst = &apos;./tpl/&apos;;
+    return gulp.src(&apos;./tpl/*.html&apos;)
+        .pipe(rev())  //?rev=@@hash
+        .pipe(gulp.dest(htmlDst));
+});
+
+
+//监听静态文件的变化，自动刷新浏览器
+gulp.task(&apos;browser-sync&apos;, function() {
+  browserSync.init(null, {
+    proxy: &quot;http://localhost:8080&quot;,//代理现有服务器    --server：运行本地服务器
+        files: [&quot;dev/css/**&quot;,&apos;dist/**/*&apos;, &apos;!dist/css/**&apos;],//要监听的文件
+        browser: &quot;google chrome&quot;,//选择哪个浏览器应该是自动打开
+        port: 4000,//指定要使用的端口,默认3000
+        notify: false
+  });
+  gulp.watch([ &quot;dev/sass/**&quot;], gulp.parallel(&apos;sass&apos;));
+  gulp.watch([ &quot;dev/js/**&quot;], gulp.parallel(&apos;browserify&apos;));
+  gulp.watch([&quot;dev/img/**&quot;], gulp.parallel(&apos;images&apos;));
+  gulp.watch([&quot;app/views/**&quot;], gulp.parallel(&apos;jade&apos;));
+  gulp.watch([&quot;dist/tpl/*.html&quot;]).on(&apos;change&apos;, reload);
+});
+
+
+
+//不像php，node.js的脚本一旦发生改变需要重新启动node服务器，nodmon就是帮我们自动重启node服务器
+gulp.task(&apos;nodemon&apos;, function (cb) {
+  var started = false;
+  return nodemon({
+    script: &apos;app.js&apos;  // node.js的服务器启动的入口脚本
+  })
+  .on(&apos;start&apos;, function () {
+    // 避免nodemon开始多次
+    if (!started) {
+      cb();
+      started = true; 
+    } 
+  })
+  .on(&apos;restart&apos;, function() {
+        setTimeout(function() {
+          console.log(&apos;-------- restart --------&apos;);
+          reload({stream: false});
+        }, 1000);
+    });
+});
+
+
+
+//入口任务
+gulp.task(&apos;default&apos; ,gulp.series(&apos;clean&apos;, gulp.parallel(&apos;browserify&apos;, &apos;sass&apos;, &apos;css&apos;, &apos;images&apos;, &apos;transfer&apos;, &apos;js&apos;), &apos;jade&apos;, &apos;html&apos;, &apos;nodemon&apos;, &apos;browser-sync&apos;));
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -114,7 +308,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://zhangyunp.github.io/2016/04/15/nodejs/" data-title="nodejs | 实验博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://zhangyunp.github.io/2016/08/02/gulp小鸡/" data-title="gulp小鸡 | 实验博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -123,19 +317,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/08/02/前端小鸡/" title="前端小鸡">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  前端小鸡</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/04/14/study-daily-9/"  title="前端小知识">
+<a href="/2016/08/02/前端小鸡/"  title="前端小鸡">
  <strong>NEXT:</strong><br/> 
- <span>前端小知识
+ <span>前端小鸡
 </span>
 </a>
 </div>
@@ -152,7 +338,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#nodejs中的restfulapi"><span class="toc-number">1.</span> <span class="toc-text">nodejs中的restfulapi</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
